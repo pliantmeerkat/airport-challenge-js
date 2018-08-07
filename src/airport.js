@@ -2,7 +2,6 @@ class Airport {
   constructor() {
     this.capacity = 12;
     this.planes = [];
-    this.currentWeather = this.weather();
   };
   setDefaultCapacity(value) {
     this.capacity = value;
@@ -11,11 +10,14 @@ class Airport {
     return this.capacity;
   }
   weather() {
-    var currentWeather = Math.floor((Math.random() + 1) + 1);
+    var currentWeather = Math.floor((Math.random() * 11));
     return currentWeather;
   };
   landPlane(plane) {
-    if(this.currentWeather > 7) {
+    if(this.planes.length >= this.capacity) {
+      throw new Error("cannot land airport full");
+    }
+    else if(this.weather() > 7) {
       throw new Error("cannot land due to storm")  
     }
     else {
@@ -23,7 +25,7 @@ class Airport {
     }
   };
   takeOffPlane(plane) {
-    if(this.currentWeather > 7) {
+    if(this.weather > 7) {
       throw new Error("cannot take off due to storm")  
     }
     else {
